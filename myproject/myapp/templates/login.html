@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NEEPCO</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="logo">NEEPCO</div>
+    </header>
+
+    <main>
+        <h1>Login to Your Account</h1>
+
+        <!-- Display general form errors if any -->
+        {% if form.errors %}
+            <div class="error">
+                <p>Please fix the following errors:</p>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form id="login-form" method="post">
+            {% csrf_token %}
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="id_username">Username (Email):</label>
+                {{ form.username }}  <!-- Render username field dynamically -->
+                {% if form.username.errors %}
+                    <div class="error">
+                        {% for error in form.username.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                {{ form.password }}  <!-- Render password field dynamically -->
+                {% if form.password.errors %}
+                    <div class="error">
+                        {% for error in form.password.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="button">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.</p>
+    </main>
+</body>
+
+</html>
